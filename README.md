@@ -13,5 +13,7 @@ Widows : `venv\Scripts\activate`<br/>
 Unix : `. venv/bin/activate`
 
 
+Installer les packages requis : <br/>
+`pip install -r requirements.txt`
 Mettre à jour la liste des package : <br/>
 `pip freeze > requirement.txt`
