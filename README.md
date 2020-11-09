@@ -14,6 +14,7 @@ Unix : `. venv/bin/activate`
 
 
 Installer les packages requis : <br/>
-`pip install -r requirements.txt`
+`pip install -r requirements.txt` 
+
 Mettre à jour la liste des package : <br/>
-`pip freeze > requirement.txt`
+`pip freeze > requirements.txt`
