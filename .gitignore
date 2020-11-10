@@ -1,9 +1,11 @@
+.env
+database/env.py
+*.csv
+*.zip
 # cache
 __pycache__
 venv
-# IDE
+# system
 .idea
 .vscode
 .DS_Store
-*.csv
-*.zip

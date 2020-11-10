@@ -1,21 +1,22 @@
+# import os
 import pymysql
-import OperationalError
+from env import HOST, USER, PASSWORD, DB_NAME, PORT
 
-db_connection = pymysql.connect(
-    host="db4free.net",
-  	user="ingrdb",
-  	passwd="db4freeIngr"
-    database="airtrafficdb"
+# print(os.path.isfile('database/airtraffic_database.sql'))
+
+db = pymysql.connect(
+    host=HOST,
+    user=USER,
+    password=PASSWORD,
+    db=DB_NAME,
+    port=PORT,
 )
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
 
-# executing cursor with execute method and pass SQL query
-#db_cursor.execute("CREATE DATABASE database")
-
-# Open and read the file 
-fd = open('airtraffic_Database.sql', 'r')
+# Open and read the file
+fd = open('database/airtraffic_database.sql', 'r')
 sqlFile = fd.read()
 fd.close()
 
@@ -27,7 +28,10 @@ for command in sqlCommands:
     # This will skip and report errors
     # For example, if the tables do not yet exist, this will skip over
     # the DROP TABLE commands
+    print(command)
     try:
         cursor.execute(command)
-    except OperationalError, msg:
-        print "Command skipped: ", msg
+    except Exception as msg:
+        print("Command skipped :", msg)
+
+db.close()
