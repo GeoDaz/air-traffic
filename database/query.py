@@ -1,6 +1,6 @@
 import pymysql
 # from os import environ
-from env import HOST, USER, PASSWORD, DB_NAME
+from database.env import HOST, USER, PASSWORD, DB_NAME
 
 
 def sql_query(query: str):
