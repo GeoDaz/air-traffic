@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = ""
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqlconnector://rbtkay:password@localhost/airtraffic"
 
 db = SQLAlchemy(app)
 
@@ -81,5 +81,6 @@ class Flight(db.Model):
     hour = db.Column(db.Integer)
     minute = db.Column(db.Integer)
     time_hour = db.Column(db.DateTime)
+
 
 
