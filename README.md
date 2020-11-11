@@ -18,3 +18,7 @@ Installer les packages requis : <br/>
 
 Mettre à jour la liste des package : <br/>
 `pip freeze > requirements.txt`
+
+
+## env
+Créer un env.py a partir du env.sample.py pour la connexion a la BDD.
