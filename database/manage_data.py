@@ -1,8 +1,11 @@
 import pandas as pd
 import sqlalchemy
 import datetime
+from env import LOCAL_DATABASE
 
-def clean_and_insert_data():   
+engine = sqlalchemy.create_engine(LOCAL_DATABASE)
+
+def clean_and_insert_data(): 
     airlines = pd.read_csv("data-csv/airlines.csv").replace(r'^\s*$', "NULL", regex=True)
     airports = pd.read_csv("data-csv/airports.csv").replace(r'^\s*$', "NULL", regex=True)
     flights = pd.read_csv("data-csv/flights.csv").replace(r'^\s*$', "NULL", regex=True)
@@ -69,14 +72,14 @@ def clean_and_insert_data():
 
 
     airports = pd.DataFrame({
-    "faa": [check_primary_if_null(airport) for airport in airports["faa"]],
-    "name": [check_if_null(airport) for airport in airports["name"]],
-    "lat": [check_if_null(airport) for airport in airports["lat"]],
-    "lon": [check_if_null(airport) for airport in airports["lon"]],
-    "alt": [check_if_null(airport) for airport in airports["alt"]],
-    "tz": [check_if_null(airport) for airport in airports["tz"]],
-    "dst": [check_if_null(airport) for airport in airports["dst"]],
-    "tzone": [check_if_null(airport) for airport in airports["tzone"]] 
+        "faa": [check_primary_if_null(airport) for airport in airports["faa"]],
+        "name": [check_if_null(airport) for airport in airports["name"]],
+        "lat": [check_if_null(airport) for airport in airports["lat"]],
+        "lon": [check_if_null(airport) for airport in airports["lon"]],
+        "alt": [check_if_null(airport) for airport in airports["alt"]],
+        "tz": [check_if_null(airport) for airport in airports["tz"]],
+        "dst": [check_if_null(airport) for airport in airports["dst"]],
+        "tzone": [check_if_null(airport) for airport in airports["tzone"]] 
     })
 
 
@@ -121,14 +124,9 @@ def clean_and_insert_data():
         "time_hour": [check_time_if_null(f) for f in flights["time_hour"]]
     })
 
-    engine = sqlalchemy.create_engine("mysql+pymysql://rbtkay:password@localhost/airtraffic")
 
     airlines.to_sql('airline', con=engine, if_exists='append', index=False)
     airports.to_sql('airport', con=engine, if_exists='append', index=False)
     planes.to_sql('plane', con=engine, if_exists='append', index=False)
     weather.to_sql('weather', con=engine, if_exists='append', index=False)
     flights.to_sql('flight', con=engine, if_exists='append', index=False)
-
-
-
-

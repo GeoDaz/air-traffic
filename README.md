@@ -18,3 +18,9 @@ Installer les packages requis : <br/>
 
 Mettre à jour la liste des package : <br/>
 `pip freeze > requirements.txt`
+
+Créer et remplir la BDD : <br/>
+`python database_init.py`
+
+Lancer l'application : <br/>
+`flask run`
