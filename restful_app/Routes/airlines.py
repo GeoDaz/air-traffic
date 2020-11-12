@@ -6,10 +6,9 @@ import pandas
 import io
 
 
-class get_airlines_count(Resource):
-    def get(self):
-        count_airlines = sql_query("SELECT COUNT(carrier) FROM airline;")[0][0]
-        return jsonify(count_airlines)
+def get_airlines_count():
+    count_airlines = sql_query("SELECT COUNT(carrier) FROM airline;")[0][0]
+    return count_airlines
 
 
 class get_number_destination_per_airlines(Resource):
@@ -35,11 +34,10 @@ class get_number_destination_per_airlines(Resource):
 
 
 # 6.3) Combien de compagnies desservent cette destination (indice : 5 compagnies) ?
-class get_number_airline_to_SEA(Resource):
-    def get():
-        count_airlines = sql_query(
-            "SELECT COUNT(DISTINCT carrier) FROM flight WHERE dest = 'SEA';")[0][0]
-        return jsonify(count_airlines)
+def get_number_airline_to_SEA():
+    count_airlines = sql_query(
+        "SELECT COUNT(DISTINCT carrier) FROM flight WHERE dest = 'SEA';")[0][0]
+    return count_airlines
 
 
 # class img_test(Resource):
