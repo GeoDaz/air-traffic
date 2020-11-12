@@ -5,7 +5,11 @@ database/env.py
 # cache
 __pycache__
 venv
+react/node_modules
 # system
 .idea
 .vscode
 .DS_Store
+*.csv
+*.zip
+env.py

@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.9.5
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Nov 09, 2020 at 10:35 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.23
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -65,15 +56,17 @@ CREATE TABLE `flights` (
   `arr_time` time NOT NULL,
   `sched_dep_time` time NOT NULL,
   `sched_arr_time` time NOT NULL,
-  `dep_delay` int(11) NOT NULL,
-  `arr_delay` int(11) NOT NULL,
-  `hour` int(11) NOT NULL,
-  `minute` int(11) NOT NULL,
+  `dep_delay` int(11) NULL,
+  `arr_delay` int(11) NULL,
   `carrier` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `tailnum` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `flight` int(11) NOT NULL,
   `origin` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `destination` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `air_time` int(11) NULL,
+  `distance` int(11) NULL,
+  `hour` int(11) NOT NULL,
+  `minute` int(11) NOT NULL,
   `time_hour` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -85,13 +78,13 @@ CREATE TABLE `flights` (
 
 CREATE TABLE `planes` (
   `tailnum` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `year` int(11) NOT NULL,
+  `year` int(11) NULL,
   `type` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `manufacturer` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `model` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `engines` int(11) NOT NULL,
   `seats` int(11) NOT NULL,
-  `speed` int(11) NOT NULL,
+  `speed` int(11) NULL,
   `engine` varchar(200) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -107,16 +100,16 @@ CREATE TABLE `weather` (
   `month` int(11) NOT NULL,
   `day` int(11) NOT NULL,
   `hour` int(11) NOT NULL,
-  `temp` decimal(10,0) NOT NULL,
-  `dewp` decimal(10,0) NOT NULL,
-  `humid` decimal(10,0) NOT NULL,
-  `wind_dir` int(11) NOT NULL,
-  `wind_speed` decimal(10,0) NOT NULL,
-  `wind_gust` decimal(10,0) NOT NULL,
-  `precip` decimal(10,0) NOT NULL,
-  `pressure` decimal(10,0) NOT NULL,
-  `visib` decimal(10,0) NOT NULL,
-  `time_hour` datetime NOT NULL
+  `temp` decimal(10,0) NULL,
+  `dewp` decimal(10,0) NULL,
+  `humid` decimal(10,0) NULL,
+  `wind_dir` int(11) NULL,
+  `wind_speed` decimal(10,0) NULL,
+  `wind_gust` decimal(10,0) NULL,
+  `precip` decimal(10,0) NULL,
+  `pressure` decimal(10,0) NULL,
+  `visib` decimal(10,0) NULL,
+  `time_hour` datetime NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -155,7 +148,8 @@ ALTER TABLE `planes`
 -- Indexes for table `weather`
 --
 ALTER TABLE `weather`
-  ADD PRIMARY KEY (`origin`,`year`,`month`,`day`,`hour`);
+  ADD PRIMARY KEY (`origin`,`year`,`month`,`day`,`hour`),
+  ADD KEY `weather_airports` (`origin`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -178,10 +172,16 @@ ALTER TABLE `flights`
   ADD CONSTRAINT `flights_airlines` FOREIGN KEY (`carrier`) REFERENCES `airlines` (`carrier`),
   ADD CONSTRAINT `flights_airport_dest` FOREIGN KEY (`destination`) REFERENCES `airports` (`faa`),
   ADD CONSTRAINT `flights_airport_origin` FOREIGN KEY (`origin`) REFERENCES `airports` (`faa`),
-  ADD CONSTRAINT `flights_planes` FOREIGN KEY (`tailnum`) REFERENCES `planes` (`tailnum`),
-  ADD CONSTRAINT `flights_weather_dest` FOREIGN KEY (`destination`) REFERENCES `weather` (`origin`),
-  ADD CONSTRAINT `flights_weather_origin` FOREIGN KEY (`origin`) REFERENCES `weather` (`origin`);
+  ADD CONSTRAINT `flights_planes` FOREIGN KEY (`tailnum`) REFERENCES `planes` (`tailnum`);
+
+--
+-- Constraints for table `weathers`
+--
+ALTER TABLE `weather`
+  ADD CONSTRAINT `weather_airports` FOREIGN KEY (`origin`) REFERENCES `airports` (`faa`);
 COMMIT;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
