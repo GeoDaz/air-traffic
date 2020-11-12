@@ -1,24 +1,7 @@
-# imports
-from flask import Flask, request, jsonify, escape
 from flask_sqlalchemy import SQLAlchemy
-from database.manage_data import clean_and_insert_data
-import os
-from env import LOCAL_DATABASE
-import json
 from flask_serialize import FlaskSerializeMixin
 
-# const
-POST = 'POST'
-GET = 'GET'
-
-# app
-app = Flask(__name__)
-app.secret_key = "INGR-airports-µ467913"
-
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
-
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 class Airline(db.Model, FlaskSerializeMixin):
     carrier = db.Column(db.String(100), primary_key=True)
@@ -93,71 +76,4 @@ class Flight(db.Model, FlaskSerializeMixin):
     time_hour = db.Column(db.DateTime)
     flight_origin = db.relationship("Airport", foreign_keys=[origin])
     flight_dest = db.relationship("Airport", foreign_keys=[dest])
-
-
-# routes
-# # airports
-@app.route('/api/airports')
-def airports():
-    airports = Airport.query.all()
-    return Airport.json_list(airports)
-
-
-@app.route('/api/airports/<faa>')
-def airport(faa):
-    fil = ["04G", "06A"]
-    airports = Airport.query.filter(Airport.faa.in_(fil))
-    return Airport.json_list(airports)
-
-
-@app.route('/api/airports/counts')
-def count_airports():
-    airlines = Airline.query.all()
-    airlines_count = len(airlines)
-    return jsonify(airlines_count)
-
-
-# airlines
-@app.route('/api/airlines')
-def airlines():
-    airlines = Airline.query.all()
-    return Airline.json_list(airlines)
-
-
-@app.route('/api/airlines/<carrier>')
-def airline(carrier):
-    airlines = Airline.query.filter_by(carrier=carrier)
-    return Airline.json_list(airlines)
-
-
-@app.route('/api/airlines/counts')
-def count_airlines():
-    airlines = Airline.query.all()
-    airlines_count = len(airlines)
-    return jsonify(airlines_count)
-
-
-# flights
-@app.route('/api/flights')
-def flights():
-    flights = Flight.query.all()
-    return Flight.json_list(flights)
-
-
-@app.route('/api/flights/<int:id>')
-def flight(id: int):
-    flight = Flight.query.filter_by(id=id)
-    return Flight.json_list(flight)
-
-
-@app.route('/api/flights/counts')
-def count_flights():
-    flights = Flight.query.all()
-    flights_count = len(flights)
-    return jsonify(flights_count)
-
-
-# run debug
-if __name__ == "__main__":
-    app.run(debug=True)
 
