@@ -28,31 +28,24 @@ class get_airports_unique_timezone_by_destination(Resource):
         return jsonify(count_zones)
 
 
-# TODO: not working, try making it in one query
-class get_better_airports_by_faa(Resource):
+class get_most_used_airport_for_departure(Resource):
     def get(self):
-        better_airport_faa = sql_query("SELECT origin FROM flight GROUP BY origin ORDER BY COUNT(id) DESC LIMIT 1;")[0][0]
-
-        print(better_airport_faa)
-
-        # better_airport = sql_query('SELECT ap.name FROM airport AS ap WHERE ap.faa = %s', (better_airport_faa))[0][0]
+        better_airport_faa = sql_query(
+            """SELECT ap.name FROM airport AS ap 
+            INNER JOIN (SELECT origin FROM flight GROUP BY origin ORDER BY COUNT(id) DESC LIMIT 1) as s2 on ap.faa = s2.origin""")[0][0]
 
         return jsonify(better_airport_faa)
 
 
 
 
-# def get_top_dest(desc=True, limit=10):
-#     top_ten_dest_faa = [cols[0] for cols in sql_query(
-#         f"SELECT dest FROM flight GROUP BY dest ORDER BY COUNT(id) {'DESC' if desc else 'ASC'} LIMIT {limit};"
-#     )]
-#     top_ten_dest = [cols[0] for cols in sqlquery(
-#         'SELECT ap.name FROM airport AS ap WHERE ap.faa IN ('
-#             + ','.join(['%s' for  in top_ten_dest_faa])
-#             + ');', 
-#         top_ten_dest_faa
-#     )]
-#     return ', '.join(top_ten_dest)
+    # top_ten_dest = [cols[0] for cols in sqlquery(
+    #     'SELECT ap.name FROM airport AS ap WHERE ap.faa IN ('
+    #         + ','.join(['%s' for  in top_ten_dest_faa])
+    #         + ');', 
+    #     top_ten_dest_faa
+    # )]
+    # return ', '.join(top_ten_dest)
 
 
 
