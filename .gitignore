@@ -4,8 +4,11 @@ database/env.py
 *.zip
 # cache
 __pycache__
+
+# Environments
 venv
 react/node_modules
+
 # system
 .idea
 .vscode
@@ -13,3 +16,6 @@ react/node_modules
 *.csv
 *.zip
 env.py
+
+# Jupyter Notebook
+.ipynb_checkpoints
