@@ -1,7 +1,10 @@
 from flask_restful import Resource
-from Models.db_models import Airline
-from flask import jsonify
+from flask import jsonify, send_file
 from database.query import sql_query
+import matplotlib.pyplot as plt
+import pandas
+import io
+
 
 class get_airlines_count(Resource):
     def get(self):
@@ -14,20 +17,40 @@ class get_number_destination_per_airlines(Resource):
         count_dest = sql_query("""SELECT airline.name, COUNT(flight.dest) FROM flight 
                                 INNER JOIN airline ON flight.carrier = airline.carrier 
                                 GROUP BY flight.carrier;""")
-        return jsonify(count_dest)
+        
+        airlines_dests = pandas.DataFrame(count_dest, columns=['Compagnie', 'Nombre de destination'])
+        bytes_obj = io.BytesIO()
+        try:
+            plt.bar(x=airlines_dests["Compagnie"], height=airlines_dests["Nombre de destination"], data=airlines_dests)
+            plt.savefig(bytes_obj, format="png")
+            bytes_obj.seek(0)
+        except expression as identifier:
+            print("Error saving the image")
+        finally:
+            plt.close()
+        
+        return send_file(bytes_obj,
+                        attachment_filename='plot.png',
+                         mimetype='image/png')
 
 
 # 6.3) Combien de compagnies desservent cette destination (indice : 5 compagnies) ?
-class get_number_airline_to_SEA():
-    count_airlines = sql_query("SELECT COUNT(DISTINCT carrier) FROM flight WHERE dest = 'SEA';")[0][0]
-    return jsonify(count_airlines)
+class get_number_airline_to_SEA(Resource):
+    def get():
+        count_airlines = sql_query(
+            "SELECT COUNT(DISTINCT carrier) FROM flight WHERE dest = 'SEA';")[0][0]
+        return jsonify(count_airlines)
 
 
+# class img_test(Resource):
+#     def get():
+#         bytes_obj = do_plot()
+#         return send_file(bytes_obj, attachment_filename='../assets/test_img.png', mimetype='image/png')
 #         # routes
 # # # airports
 # @app.route('')
 # def airports():
-    
+
 
 # @app.route('')
 # def airport(faa):
