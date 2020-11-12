@@ -1,9 +1,20 @@
 import pymysql
+# from os import environ
+from database.env import HOST, USER, PASSWORD, DB_NAME
 
 
-def sql_query(query :str):
+def sql_query(query: str):
     # Open database connection
-    db = pymysql.connect(host='db4free.net', user='ingrdb', password='db4freeIngr', db='airtrafficdb')
+    db = pymysql.connect(
+        # host=environ.get('HOST'),
+        # user=environ.get('USER'),
+        # password=environ.get('PASSWORD'),
+        # db=environ.get('DB_NAME')
+        host=HOST,
+        user=USER,
+        password=PASSWORD,
+        db=DB_NAME
+    )
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -21,7 +32,8 @@ def sql_query(query :str):
     finally:
         # disconnect from server
         db.close()
-    
+
     return result
 
-print(sql_query("INSERT INTO airlines (carrier, name) VALUES ('truc', 'test')"))
+
+#print(sql_query("SELECT * FROM airlines"))

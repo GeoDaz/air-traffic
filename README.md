@@ -25,6 +25,7 @@ Installer les packages requis : <br/>
 
 Mettre à jour la liste des package : <br/>
 
+
     pip freeze > requirements.txt
 
 Créer et remplir la BDD : <br/>
@@ -34,3 +35,8 @@ Créer et remplir la BDD : <br/>
 Lancer l'application : <br/>
 
     flask run
+
+
+## env
+Créer un env.py a partir du env.sample.py pour la connexion a la BDD.
+

@@ -1,7 +1,12 @@
+.env
+database/env.py
+*.csv
+*.zip
 # cache
 __pycache__
 venv
-# IDE
+react/node_modules
+# system
 .idea
 .vscode
 .DS_Store
