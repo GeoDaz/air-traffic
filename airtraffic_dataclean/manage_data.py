@@ -11,11 +11,11 @@ def void_to_null(df):
 
 
 def clean_and_insert_data():
-    airlines = void_to_null(pd.read_csv("data-csv/airlines.csv"))
-    airports = void_to_null(pd.read_csv("data-csv/airports.csv"))
-    flights = void_to_null(pd.read_csv("data-csv/flights.csv"))
-    planes = void_to_null(pd.read_csv("data-csv/planes.csv"))
-    weather = void_to_null(pd.read_csv("data-csv/weather.csv"))
+    airlines = void_to_null(pd.read_csv("../data-csv/airlines.csv"))
+    airports = void_to_null(pd.read_csv("../data-csv/airports.csv"))
+    flights = void_to_null(pd.read_csv("../data-csv/flights.csv"))
+    planes = void_to_null(pd.read_csv("../data-csv/planes.csv"))
+    weather = void_to_null(pd.read_csv("../data-csv/weather.csv"))
 
     format = '%Y-%m-%dT%H:%M:%S%z'
 
