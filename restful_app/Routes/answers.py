@@ -1,9 +1,9 @@
 from flask_restful import Resource
 from flask import jsonify, send_file
-from Routes.airlines import get_airlines_count, get_number_airline_to_SEA
-from Routes.airports import get_airports_count, get_airports_unique_timezone, get_airports_with_unchangeable_timezone, get_most_used_airport_for_departure
-from Routes.planes import get_planes_count, get_planes_with_most_flights, get_number_unique_planes_to_SEA
-from Routes.flights import get_most_visited_destination, get_flight_to_houston, get_number_flights_NYC_SEA, get_number_unique_flights_by_destination
+from Utils.airlines import get_airlines_count, get_number_airline_to_SEA
+from Utils.airports import get_airports_count, get_airports_unique_timezone, get_airports_with_unchangeable_timezone, get_most_used_airport_for_departure
+from Utils.planes import get_planes_count, get_planes_with_most_flights, get_number_unique_planes_to_SEA
+from Utils.flights import get_most_visited_destination, get_flight_to_houston, get_number_flights_NYC_SEA, get_number_unique_flights_by_destination
 
 
 class Answers(Resource):
