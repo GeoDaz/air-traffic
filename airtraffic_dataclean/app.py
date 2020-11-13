@@ -13,7 +13,6 @@ db = SQLAlchemy(app)
 class Airline(db.Model):
     carrier = db.Column(db.String(100), primary_key=True)
     name = db.Column(db.String(100))
-    # flights = db.relationship("Flight", backref='airline')
 
 
 class Airport(db.Model):
@@ -25,7 +24,6 @@ class Airport(db.Model):
     tz = db.Column(db.Integer)
     dst = db.Column(db.String(100))
     tzone = db.Column(db.String(100))
-    # flights = db.relationship("Flight", backref='airport', lazy=True)
 
 
 class Plane(db.Model):
@@ -38,7 +36,6 @@ class Plane(db.Model):
    seats = db.Column(db.Integer)
    speed = db.Column(db.Integer)
    engine = db.Column(db.String(100))
-#    flights = db.relationship("Flight", backref='plane', lazy=True)
 
 
 class Weather(db.Model):
@@ -57,7 +54,6 @@ class Weather(db.Model):
     pressure = db.Column(db.Float)
     visib = db.Column(db.Integer)
     time_hour = db.Column(db.DateTime)
-    # airport = db.relationship("Airport", backref='weather', lazy=True)
 
 
 class Flight(db.Model):
@@ -84,6 +80,5 @@ class Flight(db.Model):
     flight_origin = db.relationship("Airport", foreign_keys=[origin])
     flight_dest = db.relationship("Airport", foreign_keys=[dest])
 
-# run debug
 if __name__ == "__main__":
     app.run(debug=True)
