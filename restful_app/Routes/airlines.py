@@ -11,7 +11,7 @@ import io
 
 class Airlines(Resource):
     def get(self):
-        plt.rcParams['figure.figsize'] = (25, 10)
+        plt.rcParams['figure.figsize'] = (10, 10)
 
         count_dest = sql_query("""SELECT airline.name, COUNT(flight.dest) FROM flight 
             INNER JOIN airline ON flight.carrier = airline.carrier 
@@ -28,6 +28,7 @@ class Airlines(Resource):
                 height=airlines_dests["Nombre de destination"],
                 data=airlines_dests
             )
+            plt.xticks(rotation='vertical')
             plt.savefig(bytes_obj, format="png")
             bytes_obj.seek(0)
         except expression as identifier:

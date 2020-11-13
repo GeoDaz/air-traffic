@@ -10,7 +10,6 @@ const HomePage = () => {
 		fetch('http://localhost:5000/api/airports/origin')
 			.then(response => response.json())
 			.then(response => {
-				// console.log(response);
 				if (response.airports) setAirports(response.airports);
 			})
 			.catch(e => console.error(e));
