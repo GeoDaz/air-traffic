@@ -2,7 +2,7 @@
 from flask import Flask, request, jsonify, escape
 from flask_sqlalchemy import SQLAlchemy
 import os
-from env import LOCAL_DATABASE
+from database.env import LOCAL_DATABASE
 import json
 from Routes.airports import Airports
 from Routes.airlines import Airlines
@@ -34,6 +34,11 @@ api.add_resource(Airports, "/api/airports/<string:faa>")
 
 api.add_resource(Answers, "/api/answers")
 api.add_resource(Airlines, "/api/airlines/destination/count")
+api.add_resource(
+    Airlines,
+    "/api/airlines/destination/count/origin/<use_origin>",
+    endpoint="airlines_origin"
+)
 
 # run debug
 if __name__ == "__main__":

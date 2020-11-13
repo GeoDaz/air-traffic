@@ -1,7 +1,8 @@
 .env
-database/env.py
+env.py
 *.csv
 *.zip
+
 # cache
 __pycache__
 
@@ -13,9 +14,6 @@ react/node_modules
 .idea
 .vscode
 .DS_Store
-*.csv
-*.zip
-env.py
 
 # Jupyter Notebook
 .ipynb_checkpoints
