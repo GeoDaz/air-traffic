@@ -33,6 +33,11 @@ def get_most_used_airport_for_departure():
     return better_airport_faa
 
 
+def get_airport_info(airport_name): # EWR JFK LGA
+    airport_info = sql_query(f"SELECT faa, tzone, dep_time, sched_dep_time, dep_delay, arr_time, sched_arr_time, arr_delay, carrier, flight, tailnum, origin, dest, air_time, distance, time_hour from airport INNER JOIN flight on airport.faa = flight.origin where faa = '{airport_name}'")
+    return airport_info
+
+# tzone, dep_time, shced_dep_time, dep_delay, arr_time, sched_arr_time, arr_delay, carrier, flight, tailnum, origin, dest, air_time, distance, time_hour 
 
 
     # top_ten_dest = [cols[0] for cols in sqlquery(

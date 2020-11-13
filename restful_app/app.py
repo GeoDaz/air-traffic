@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from env import LOCAL_DATABASE
 import json
+from Routes.airport import Airport
 
-from Models.db_models import Airport
 # from Routes.airlines import get_number_destination_per_airlines
 # from Routes.airports import get_airports_count, get_airports_unique_timezone, get_airports_unique_timezone_by_destination
 # from Routes.flights import get_flights_count, get_most_visited_destination, get_planes_with_most_flights
@@ -32,50 +32,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
 db = SQLAlchemy(app)
 
 
-
-# # airlines
-# @app.route('/api/airlines')
-# def airlines():
-#     airlines = Airline.query.all()
-#     return Airline.json_list(airlines)
-
-
-# @app.route('/api/airlines/<carrier>')
-# def airline(carrier):
-#     airlines = Airline.query.filter_by(carrier=carrier)
-#     return Airline.json_list(airlines)
-
-
-
-# # airline count
-# @app.route('/api/airlines/count')
-# def count_airlines():
-#     airlines = Airline.query.all()
-#     airlines_count = len(airlines)
-#     return jsonify(airlines_count)
-
-
-# # flights
-# @app.route('/api/flights')
-# def flights():
-#     flights = Flight.query.all()
-#     return Flight.json_list(flights)
-
-
-# @app.route('/api/flights/<int:id>')
-# def flight(id: int):
-#     flight = Flight.query.filter_by(id=id)
-#     return Flight.json_list(flight)
-
-
-# @app.route('/api/flights/count')
-# def count_flights():
-#     flights = Flight.query.all()
-#     flights_count = len(flights)
-#     return jsonify(flights_count)
-
 # airport routes
-# api.add_resource(get_all_airports, '/api/airports')
+api.add_resource(Airport, "/api/airports")
 # api.add_resource(get_airports_by_faa, '/api/airports/<string:faa>')
 
 api.add_resource(Answers, "/api/answers")
