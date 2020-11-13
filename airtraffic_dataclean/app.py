@@ -6,7 +6,7 @@ from env import LOCAL_DATABASE, REMOTE_DATABASE
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = REMOTE_DATABASE
+app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
 
 db = SQLAlchemy(app)
 
