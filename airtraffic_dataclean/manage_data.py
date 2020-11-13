@@ -1,32 +1,39 @@
 import pandas as pd
 import sqlalchemy
 import datetime
-from env import LOCAL_DATABASE
+from database.env import LOCAL_DATABASE
 
 engine = sqlalchemy.create_engine(LOCAL_DATABASE)
 
-def clean_and_insert_data(): 
-    airlines = pd.read_csv("data-csv/airlines.csv").replace(r'^\s*$', "NULL", regex=True)
-    airports = pd.read_csv("data-csv/airports.csv").replace(r'^\s*$', "NULL", regex=True)
-    flights = pd.read_csv("data-csv/flights.csv").replace(r'^\s*$', "NULL", regex=True)
-    planes = pd.read_csv("data-csv/planes.csv").replace(r'^\s*$', "NULL", regex=True)
-    weather = pd.read_csv("data-csv/weather.csv").replace(r'^\s*$', "NULL", regex=True)
+
+def void_to_null(df):
+    return df.replace(r'^\s*$', "NULL", regex=True)
+
+
+def clean_and_insert_data():
+    airlines = void_to_null(pd.read_csv("data-csv/airlines.csv"))
+    airports = void_to_null(pd.read_csv("data-csv/airports.csv"))
+    flights = void_to_null(pd.read_csv("data-csv/flights.csv"))
+    planes = void_to_null(pd.read_csv("data-csv/planes.csv"))
+    weather = void_to_null(pd.read_csv("data-csv/weather.csv"))
 
     format = '%Y-%m-%dT%H:%M:%S%z'
 
-    check_if_null = lambda s: s if s != "NULL" else None
-    check_primary_if_null = lambda s: s if s != "NULL" else "Unknown"
-    check_time_if_null = lambda s: datetime.datetime.strptime(s, format) if s != "NULL" else None
+    def check_if_null(s): return s if s != "NULL" else None
+    def check_primary_if_null(s): return s if s != "NULL" else "Unknown"
+
+    def check_time_if_null(s):
+        return datetime.datetime.strptime(s, format) if s != "NULL" else None
 
     MISSING_AIRPORTS = pd.DataFrame({
         "faa": ['BQN', 'PSE', 'SJU', 'STT'],
         "name": ['Rafael Hernandez Airport', 'Mercedita Airport', 'San Juan Airport', 'Cyril E. King Airport'],
         "lat": ["NULL", "NULL", "NULL", "NULL"],
-        "lon": ["NULL","NULL","NULL","NULL"],
-        "alt":["NULL","NULL","NULL","NULL"],
-        "tz":["NULL","NULL","NULL","NULL"],
-        "dst":["NULL","NULL","NULL","NULL"],
-        "tzone":["NULL","NULL","NULL","NULL"]
+        "lon": ["NULL", "NULL", "NULL", "NULL"],
+        "alt": ["NULL", "NULL", "NULL", "NULL"],
+        "tz": ["NULL", "NULL", "NULL", "NULL"],
+        "dst": ["NULL", "NULL", "NULL", "NULL"],
+        "tzone": ["NULL", "NULL", "NULL", "NULL"]
     })
 
     airports = pd.concat([airports, MISSING_AIRPORTS])
@@ -58,7 +65,6 @@ def clean_and_insert_data():
         "name": [check_if_null(a) for a in airlines["name"]],
     })
 
-
     planes = pd.DataFrame({
         "tailnum": [check_primary_if_null(t) for t in planes["tailnum"]],
         "year": [check_if_null(t) for t in planes["year"]],
@@ -71,7 +77,6 @@ def clean_and_insert_data():
         "engine": [check_if_null(t) for t in planes["engine"]]
     })
 
-
     airports = pd.DataFrame({
         "faa": [check_primary_if_null(airport) for airport in airports["faa"]],
         "name": [check_if_null(airport) for airport in airports["name"]],
@@ -80,9 +85,8 @@ def clean_and_insert_data():
         "alt": [check_if_null(airport) for airport in airports["alt"]],
         "tz": [check_if_null(airport) for airport in airports["tz"]],
         "dst": [check_if_null(airport) for airport in airports["dst"]],
-        "tzone": [check_if_null(airport) for airport in airports["tzone"]] 
+        "tzone": [check_if_null(airport) for airport in airports["tzone"]]
     })
-
 
     weather = pd.DataFrame({
         "origin": [check_primary_if_null(w) for w in weather["origin"]],
@@ -99,9 +103,8 @@ def clean_and_insert_data():
         "precip": [check_if_null(w) for w in weather["precip"]],
         "pressure": [check_if_null(w) for w in weather["pressure"]],
         "visib": [check_if_null(w) for w in weather["visib"]],
-        "time_hour": [check_time_if_null(w) for w in weather["time_hour"]] 
+        "time_hour": [check_time_if_null(w) for w in weather["time_hour"]]
     })
-
 
     flights = pd.DataFrame({
         "year": [check_if_null(f) for f in flights["year"]],
@@ -124,7 +127,6 @@ def clean_and_insert_data():
         "minute": [check_if_null(f) for f in flights["minute"]],
         "time_hour": [check_time_if_null(f) for f in flights["time_hour"]]
     })
-
 
     airlines.to_sql('airline', con=engine, if_exists='append', index=False)
     airports.to_sql('airport', con=engine, if_exists='append', index=False)

@@ -31,31 +31,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
 
 db = SQLAlchemy(app)
 
-
 # airport routes
 api.add_resource(Airport, "/api/airports")
-# api.add_resource(get_airports_by_faa, '/api/airports/<string:faa>')
 
 api.add_resource(Answers, "/api/answers")
-
-# api.add_resource(get_airports_count, '/api/airports/count')
-# api.add_resource(get_airports_unique_timezone, '/api/airports/timezone/count')
-# api.add_resource(get_airports_unique_timezone_by_destination, '/api/airports/timezone/<string:dst>')
-# # api.add_resource(get_better_airports_by_faa, "/api/hello")
-
-# # airline routes
-# # api.add_resource(get_airlines_count, '/api/airlines/count')
-# api.add_resource(get_number_destination_per_airlines, '/api/airlines/destination/count')
-
-# # flights routes
-# api.add_resource(get_flights_count, '/api/flights/count')
-# api.add_resource(get_most_visited_destination, '/api/most-visited-destination/<string:order>/<int:limit>')
-# api.add_resource(get_planes_with_most_flights, '/api/plane-with-most-flight/<string:order>/<int:limit>')
-
-# # planes routes
-# api.add_resource(get_planes_count, '/api/planes/count')
 
 # run debug
 if __name__ == "__main__":
     app.run(debug=True)
-
