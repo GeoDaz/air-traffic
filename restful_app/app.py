@@ -2,9 +2,11 @@
 from flask import Flask, request, jsonify, escape
 from flask_sqlalchemy import SQLAlchemy
 import os
-from env import LOCAL_DATABASE
+from database.env import LOCAL_DATABASE
 import json
-from Routes.airport import Airport
+from Routes.airports import Airports
+from Routes.airlines import Airlines
+from Routes.origin_airports import OriginAirports
 
 # from Routes.airlines import get_number_destination_per_airlines
 # from Routes.airports import get_airports_count, get_airports_unique_timezone, get_airports_unique_timezone_by_destination
@@ -32,9 +34,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
 db = SQLAlchemy(app)
 
 # airport routes
-api.add_resource(Airport, "/api/airports")
+api.add_resource(OriginAirports, "/api/airports/origin")
+api.add_resource(Airports, "/api/airports/<string:faa>")
 
 api.add_resource(Answers, "/api/answers")
+api.add_resource(Airlines, "/api/airlines/destination/count")
 
 # run debug
 if __name__ == "__main__":

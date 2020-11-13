@@ -6,7 +6,8 @@ Extraire l'archive des csv dans data-csv
 
 Les dossier se découpe en 3 projets plus les notbooks.
 
-Les projets airtraffic_dataclean/ et restful_app/ ont chacun leur propre venv. (sinon bug de dépendense circulaire)
+Les projets airtraffic_dataclean/ et restful_app/ ont chacun leur propre venv. (sinon bug de dépendense circulaire)<br/>
+Il faut donc ouvrir leurs dossiers séparemment, leurt en créer un chacun
 
 Le 3eme projet est le projet React : react/. Pour le lancer :<br/>
 `npm install` puis `npm start`
