@@ -1,29 +1,24 @@
-const Table = ({ data, headers }) => {
-    console.log(data);
-    return (
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    {headers.map((h, index) => (
-                        <th scope="col" key={index}>
-                            {h}
-                        </th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((row, index) => (
-                    <tr>
-                        <th scope="row">{index + 1}</th>
-                        {row.map((col, index) => (
-                                <td>{col}</td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
-};
+import { Table } from 'semantic-ui-react';
 
-export default Table;
+const AutoTable = ({ table, cols, className }) => (
+	<Table basic className={className}>
+		<Table.Header>
+			<Table.Row>
+				{cols.map(col => (
+					<Table.HeaderCell key={col}>{col}</Table.HeaderCell>
+				))}
+			</Table.Row>
+		</Table.Header>
+		<Table.Body>
+			{table.map((row, i) => (
+				<Table.Row key={i}>
+					{row.map((value, index) => (
+						<Table.Cell key={index}>{value}</Table.Cell>
+					))}
+				</Table.Row>
+			))}
+		</Table.Body>
+	</Table>
+);
+
+export default AutoTable;
