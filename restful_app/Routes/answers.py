@@ -16,7 +16,7 @@ class Answers(Resource):
         answers["question_3"] = get_airports_with_unchangeable_timezone()
 
         # QUESTION 4 - Quel est l’aéroport de départ le plus emprunté ? Quelles sont les 10 destinations les plus (moins) prisées ? Quelle sont les 10 avions qui ont le plus (moins) décollé ?
-        answers["question_4"] = [get_most_used_airport_for_departure(), get_most_visited_destination(), get_most_visited_destination(order="DESC"), get_planes_with_most_flights(), get_planes_with_most_flights(order="ASC")]
+        answers["question_4"] = [get_most_used_airport_for_departure(), get_most_visited_destination(), get_most_visited_destination(order="DESC"), get_planes_with_most_flights(order="ASC")]
 
         # QUESTION 5 - Trouver combien chaque compagnie a desservi de destination ; combien chaque compagnie a desservie de destination par aéroport d’origine. Réaliser les graphiques adéquats qui synthétisent ces informations ?
         # image

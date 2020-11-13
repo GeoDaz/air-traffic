@@ -77,17 +77,11 @@ const QuestionPage = () => {
 						</ul>
 						<br />
 						<b>Les Avions qui ont le plus décollés:</b>
-						<ul className="list-group">
-							{answers['question_4'][3].map((destination, index) => (
-								<li className="list-group-item" key={index}>
-									{destination}
-								</li>
-							))}
-						</ul>
+							<img src="http://localhost:5000/api/planes"/>
 						<br />
 						<b>Les Avions qui ont le moins décollés:</b>
 						<ul className="list-group">
-							{answers['question_4'][4].map((destination, index) => (
+							{answers['question_4'][3].map((destination, index) => (
 								<li className="list-group-item" key={index}>
 									{destination}
 								</li>

@@ -8,6 +8,7 @@ from Routes.airports import Airports
 from Routes.airlines import Airlines
 from Routes.origin_airports import OriginAirports
 from Routes.answers import Answers
+from Routes.planes import Planes
 
 from flask_restful import Api
 from flask_cors import CORS, cross_origin
@@ -27,6 +28,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
 
 db = SQLAlchemy(app)
+
+# planes routes
+api.add_resource(Planes, "/api/planes")
 
 # airport routes
 api.add_resource(OriginAirports, "/api/airports/origin")
