@@ -1,7 +1,7 @@
 import pandas as pd
 import sqlalchemy
 import datetime
-from database.env import LOCAL_DATABASE
+from env import LOCAL_DATABASE
 
 engine = sqlalchemy.create_engine(LOCAL_DATABASE)
 
