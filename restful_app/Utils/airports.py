@@ -5,36 +5,32 @@ from database.query import sql_query
       
 
 class get_airports_by_faa(Resource):
-    def get(self, faa):
+    def get_airports_by_faa(self, faa):
         airports = Airport.query.filter_by(faa=faa) #Airport.faa.in_(fil)
         return Airport.json_list(airports)
 
 
-class get_airports_count(Resource):
-    def get(self):
-        airports_count = sql_query("select COUNT(faa) from airport")[0][0]
-        return jsonify(airports_count)
+def get_airports_count():
+    airports_count = sql_query("select COUNT(faa) from airport")[0][0]
+    return airports_count
 
 
-class get_airports_unique_timezone(Resource):
-    def get(self):
-        count_tz = sql_query("SELECT COUNT(DISTINCT tz) FROM airport;")[0][0]
-        return jsonify(count_tz)
+def get_airports_unique_timezone():
+    count_tz = sql_query("SELECT COUNT(DISTINCT tz) FROM airport;")[0][0]
+    return count_tz
 
 
-class get_airports_unique_timezone_by_destination(Resource):
-    def get(self, dst):
-        count_zones = sql_query("SELECT count(DISTINCT tzone) FROM airport WHERE dst = 'N';")[0][0]
-        return jsonify(count_zones)
+def get_airports_with_unchangeable_timezone():
+    count_zones = sql_query("SELECT count(DISTINCT tzone) FROM airport WHERE dst = 'N';")[0][0]
+    return count_zones
 
 
-class get_most_used_airport_for_departure(Resource):
-    def get(self):
-        better_airport_faa = sql_query(
-            """SELECT ap.name FROM airport AS ap 
-            INNER JOIN (SELECT origin FROM flight GROUP BY origin ORDER BY COUNT(id) DESC LIMIT 1) as s2 on ap.faa = s2.origin""")[0][0]
+def get_most_used_airport_for_departure():
+    better_airport_faa = sql_query(
+        """SELECT ap.name FROM airport AS ap 
+        INNER JOIN (SELECT origin FROM flight GROUP BY origin ORDER BY COUNT(id) DESC LIMIT 1) as s2 on ap.faa = s2.origin""")[0][0]
 
-        return jsonify(better_airport_faa)
+    return better_airport_faa
 
 
 
