@@ -31,7 +31,6 @@ def get_number_flights_NYC_SEA():
     return count_flights
 
 
-# question 7
 def get_number_unique_flights_by_destination():
     count_flight_by_destination = sql_query(
         """SELECT airport.name, COUNT(DISTINCT flight.flight) as counter FROM flight 
@@ -40,22 +39,3 @@ def get_number_unique_flights_by_destination():
     )
 
     return count_flight_by_destination
-
-#         # routes
-# # # airports
-# @app.route('')
-# def airports():
-
-
-# @app.route('')
-# def airport(faa):
-#     fil = ["04G", "06A"]
-#     airports = Airport.query.filter(Airport.faa.in_(fil))
-#     return Airport.json_list(airports)
-
-# # airport count
-# @app.route('')
-# def count_airports():
-#     airlines = Airline.query.all()
-#     airlines_count = len(airlines)
-#     return airlines_count
