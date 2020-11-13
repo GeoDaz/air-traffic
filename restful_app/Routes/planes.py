@@ -4,7 +4,9 @@ from Utils.airports import get_airport_info
 from flask_restful import Resource
 from flask import jsonify, send_file
 from database.query import sql_query
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use('Agg')  # nopep8
 import pandas
 import io
 from Utils.planes import get_planes_with_most_flights
