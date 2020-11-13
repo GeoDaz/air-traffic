@@ -1,15 +1,15 @@
-from app import db
-from database.manage_data import clean_and_insert_data
-import os 
+from flask_sqlalchemy import SQLAlchemy
+from flask_serialize import FlaskSerializeMixin
 
+db = SQLAlchemy()
 
-class Airline(db.Model):
+class Airline(db.Model, FlaskSerializeMixin):
     carrier = db.Column(db.String(100), primary_key=True)
     name = db.Column(db.String(100))
-    flights = db.relationship("Flight", backref='airline')
+    # flights = db.relationship("Flight", backref='airline')
 
 
-class Airport(db.Model):
+class Airport(db.Model, FlaskSerializeMixin):
     faa = db.Column(db.String(100), primary_key=True)
     name = db.Column(db.String(100))
     lat = db.Column(db.Float)
@@ -18,11 +18,10 @@ class Airport(db.Model):
     tz = db.Column(db.Integer)
     dst = db.Column(db.String(100))
     tzone = db.Column(db.String(100))
-    weather = db.Column(db.String(100), db.ForeignKey("weather.origin"), nullable=True)
-    flights = db.relationship("Flight", backref='airport', lazy=True)
+    # flights = db.relationship("Flight", backref='airport', lazy=True)
 
 
-class Plane(db.Model):
+class Plane(db.Model, FlaskSerializeMixin):
    tailnum = db.Column(db.String(100), primary_key=True)
    year = db.Column(db.Integer)
    type = db.Column(db.String(100))
@@ -32,11 +31,11 @@ class Plane(db.Model):
    seats = db.Column(db.Integer)
    speed = db.Column(db.Integer)
    engine = db.Column(db.String(100))
-   flights = db.relationship("Flight", backref='plane', lazy=True)
+#    flights = db.relationship("Flight", backref='plane', lazy=True)
 
 
-class Weather(db.Model):
-    origin = db.Column(db.String(100), primary_key=True)
+class Weather(db.Model, FlaskSerializeMixin):
+    origin = db.Column(db.String(100), db.ForeignKey("airport.faa"), primary_key=True)
     year = db.Column(db.Integer, primary_key=True)
     month = db.Column(db.Integer, primary_key=True)
     day = db.Column(db.Integer, primary_key=True)
@@ -51,10 +50,10 @@ class Weather(db.Model):
     pressure = db.Column(db.Float)
     visib = db.Column(db.Integer)
     time_hour = db.Column(db.DateTime)
-    airport = db.relationship("Airport", backref='weather', lazy=True)
+    # airport = db.relationship("Airport", backref='weather', lazy=True)
 
 
-class Flight(db.Model):
+class Flight(db.Model, FlaskSerializeMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     year = db.Column(db.Integer)
     month = db.Column(db.Integer)
@@ -75,8 +74,6 @@ class Flight(db.Model):
     hour = db.Column(db.Integer)
     minute = db.Column(db.Integer)
     time_hour = db.Column(db.DateTime)
-
-db.create_all()
-clean_and_insert_data()
-
+    flight_origin = db.relationship("Airport", foreign_keys=[origin])
+    flight_dest = db.relationship("Airport", foreign_keys=[dest])
 

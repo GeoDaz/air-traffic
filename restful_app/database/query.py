@@ -1,19 +1,16 @@
 import pymysql
 # from os import environ
-from database.env import HOST, USER, PASSWORD, DB_NAME
+from database.env import HOST, USER, PASSWORD, DB_NAME, PORT
 
 
-def sql_query(query: str):
+def sql_query(query: str, values=None):
     # Open database connection
     db = pymysql.connect(
-        # host=environ.get('HOST'),
-        # user=environ.get('USER'),
-        # password=environ.get('PASSWORD'),
-        # db=environ.get('DB_NAME')
         host=HOST,
         user=USER,
         password=PASSWORD,
-        db=DB_NAME
+        db=DB_NAME,
+        port=PORT
     )
 
     # prepare a cursor object using cursor() method
@@ -21,7 +18,10 @@ def sql_query(query: str):
 
     try:
         # execute sql query
-        cursor.execute(query)
+        if(values):
+            cursor.execute(query, values)
+        else:
+            cursor.execute(query)
 
         # fetch all rows in a list of lists
         result = cursor.fetchall()
@@ -34,6 +34,3 @@ def sql_query(query: str):
         db.close()
 
     return result
-
-
-#print(sql_query("SELECT * FROM airlines"))
