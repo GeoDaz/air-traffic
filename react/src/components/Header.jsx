@@ -1,10 +1,10 @@
-import './style.css';
+const { Icon } = require('semantic-ui-react');
 
 const Header = () => (
 	<header>
 		<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
 			<a className="navbar-brand" href="/">
-				Aeroport
+				Aeroport <Icon name="plane" />
 			</a>
 			<button
 				className="navbar-toggler"

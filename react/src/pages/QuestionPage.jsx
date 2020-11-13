@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Loader, Segment } from 'semantic-ui-react';
+import { Container, Header, Loader, Segment } from 'semantic-ui-react';
 import Table from '../components/Table';
 
 const QuestionPage = () => {
@@ -16,6 +16,7 @@ const QuestionPage = () => {
 
 	return (
 		<Container>
+			<Header as="h1">Questions</Header>
 			{answers ? (
 				<>
 					<Segment>
@@ -77,7 +78,7 @@ const QuestionPage = () => {
 						</ul>
 						<br />
 						<b>Les Avions qui ont le plus décollés:</b>
-							<img src="http://localhost:5000/api/planes"/>
+						<img src="http://localhost:5000/api/planes" />
 						<br />
 						<b>Les Avions qui ont le moins décollés:</b>
 						<ul className="list-group">
