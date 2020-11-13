@@ -10,17 +10,34 @@ import io
 
 
 class Airlines(Resource):
-    def get(self):
-        plt.rcParams['figure.figsize'] = (10, 10)
-
-        count_dest = sql_query("""SELECT airline.name, COUNT(flight.dest) FROM flight 
-            INNER JOIN airline ON flight.carrier = airline.carrier 
-            GROUP BY flight.carrier LIMIT 0, 25;""")
-
-        airlines_dests = pandas.DataFrame(
-            count_dest, columns=['Compagnie', 'Nombre de destination']
-        )
+    def get(self, use_origin=False):
+        plt.rcParams['figure.figsize'] = (10, 7)
         bytes_obj = io.BytesIO()
+
+        if use_origin:
+            count_dest = sql_query(
+                "SELECT airline.name, airport.name, COUNT(flight.dest) FROM flight " +
+                "INNER JOIN airline ON flight.carrier = airline.carrier " +
+                "INNER JOIN airport ON flight.origin = airport.faa " +
+                "GROUP BY flight.carrier, flight.origin;"
+            )
+            airlines_dests = pandas.DataFrame(
+                count_dest,
+                columns=['Compagnie', 'Origine', 'Nombre de destination']
+            )
+            airlines_dests['Compagnie'] = airlines_dests[['Compagnie', 'Origine']].apply(
+                lambda x: ' - '.join(x), axis=1
+            )
+        else:
+            count_dest = sql_query(
+                "SELECT airline.name, COUNT(flight.dest) FROM flight " +
+                "INNER JOIN airline ON flight.carrier = airline.carrier " +
+                "GROUP BY flight.carrier;"
+            )
+            airlines_dests = pandas.DataFrame(
+                count_dest,
+                columns=['Compagnie', 'Nombre de destination']
+            )
 
         try:
             plt.bar(

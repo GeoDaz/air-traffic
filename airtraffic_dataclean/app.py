@@ -1,14 +1,14 @@
-# from env import LOCAL_DATABASE
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from env import LOCAL_DATABASE, REMOTE_DATABASE
+from env import DATABASE
 
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE
 
 db = SQLAlchemy(app)
+
 
 class Airline(db.Model):
     carrier = db.Column(db.String(100), primary_key=True)
@@ -39,7 +39,8 @@ class Plane(db.Model):
 
 
 class Weather(db.Model):
-    origin = db.Column(db.String(100), db.ForeignKey("airport.faa"), primary_key=True)
+    origin = db.Column(db.String(100), db.ForeignKey(
+        "airport.faa"), primary_key=True)
     year = db.Column(db.Integer, primary_key=True)
     month = db.Column(db.Integer, primary_key=True)
     day = db.Column(db.Integer, primary_key=True)
@@ -67,11 +68,15 @@ class Flight(db.Model):
     arr_time = db.Column(db.Integer)
     sched_arr_time = db.Column(db.Integer)
     arr_delay = db.Column(db.Integer)
-    carrier = db.Column(db.String(100), db.ForeignKey('airline.carrier'), nullable=True)
+    carrier = db.Column(db.String(100), db.ForeignKey(
+        'airline.carrier'), nullable=True)
     flight = db.Column(db.String(100))
-    tailnum = db.Column(db.String(100), db.ForeignKey('plane.tailnum'), nullable=True)
-    origin = db.Column(db.String(100), db.ForeignKey('airport.faa'), nullable=True)
-    dest = db.Column(db.String(100), db.ForeignKey('airport.faa'), nullable=True)
+    tailnum = db.Column(db.String(100), db.ForeignKey(
+        'plane.tailnum'), nullable=True)
+    origin = db.Column(db.String(100), db.ForeignKey(
+        'airport.faa'), nullable=True)
+    dest = db.Column(db.String(100), db.ForeignKey(
+        'airport.faa'), nullable=True)
     air_time = db.Column(db.Integer)
     distance = db.Column(db.Integer)
     hour = db.Column(db.Integer)
@@ -80,5 +85,7 @@ class Flight(db.Model):
     flight_origin = db.relationship("Airport", foreign_keys=[origin])
     flight_dest = db.relationship("Airport", foreign_keys=[dest])
 
+    
+# run debug
 if __name__ == "__main__":
     app.run(debug=True)
