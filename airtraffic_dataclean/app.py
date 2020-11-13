@@ -1,12 +1,12 @@
 # from env import LOCAL_DATABASE
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from env import LOCAL_DATABASE
+from env import LOCAL_DATABASE, REMOTE_DATABASE
 
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = LOCAL_DATABASE
+app.config["SQLALCHEMY_DATABASE_URI"] = REMOTE_DATABASE
 
 db = SQLAlchemy(app)
 
