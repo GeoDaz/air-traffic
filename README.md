@@ -38,5 +38,5 @@ Lancer l'application : <br/>
 
 
 ## env
-Créer un env.py a partir du env.sample.py pour la connexion a la BDD.
+Créer un env.py a partir du env.py.sample depuis database/ pour la connexion a la BDD.
 

@@ -3,7 +3,7 @@ import pymysql
 from database.env import HOST, USER, PASSWORD, DB_NAME
 
 
-def sql_query(query: str):
+def sql_query(query: str, values=None):
     # Open database connection
     db = pymysql.connect(
         # host=environ.get('HOST'),
@@ -21,7 +21,10 @@ def sql_query(query: str):
 
     try:
         # execute sql query
-        cursor.execute(query)
+        if(values):
+            cursor.execute(query, values)
+        else:
+            cursor.execute(query)
 
         # fetch all rows in a list of lists
         result = cursor.fetchall()
