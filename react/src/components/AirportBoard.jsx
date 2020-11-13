@@ -18,7 +18,7 @@ const AirportBoard = ({ airport }) => {
 
 	return (
 		<Segment color="blue">
-			<Header>Au départ de l'aéroport {airport.name}</Header>
+			<Header>Vols au départ de l'aéroport {airport.name}</Header>
 			{flights.length ? (
 				<TableObject
 					table={flights}

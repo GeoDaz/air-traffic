@@ -31,7 +31,7 @@ def get_most_used_airport_for_departure():
         """SELECT ap.name FROM airport AS ap 
         INNER JOIN (
             SELECT origin FROM flight GROUP BY origin ORDER BY COUNT(id) DESC LIMIT 1
-        ) as s2 on ap.faa = s2.origin LIMIT 0, 25""")[0][0]
+        ) as s2 on ap.faa = s2.origin LIMIT 0, 10""")[0][0]
 
     return better_airport_faa
 
@@ -42,7 +42,7 @@ def get_airport_info(faa):
         "INNER JOIN flight AS f on ap1.faa = f.origin " +
         "INNER JOIN airport AS ap2 on ap2.faa = f.dest " +
         "INNER JOIN airline AS al on al.carrier = f.carrier " +
-        "WHERE ap1.faa = %s ORDER BY f.time_hour LIMIT 0, 25;",
+        "WHERE ap1.faa = %s ORDER BY f.time_hour DESC LIMIT 0, 10;",
         (faa)
     )
     return airport_info

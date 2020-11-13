@@ -1,15 +1,10 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+main {
+  padding-top: 25px;
 }
 
 ul.list-group {
@@ -17,4 +12,8 @@ ul.list-group {
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 1em;
+}
+
+h3 {
+  font-size: 1.1rem;
 }
