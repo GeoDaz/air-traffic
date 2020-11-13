@@ -16,10 +16,6 @@ def get_most_visited_destination(order="ASC", limit=10):
     )]
     return top_ten_dest_faa
 
-
-
-
-
 def get_flight_to_houston():
     flights_to_houston = sql_query("SELECT flight, origin, dest, time_hour FROM flight WHERE dest = 'IAH' OR dest = 'HOU' ORDER BY flight.flight;")
     return flights_to_houston
