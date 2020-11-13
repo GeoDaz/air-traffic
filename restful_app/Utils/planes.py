@@ -17,8 +17,15 @@ def get_planes_with_most_flights(order="DESC", limit=10):
     if order != "DESC" and order != "ASC":
         return {"error": "param order must be DESC or ASC"}
 
-    top_ten_plane = [cols[0] for cols in sql_query(
-        f"SELECT tailnum, count(tailnum) AS c FROM flight WHERE tailnum IS NOT NULL GROUP BY tailnum ORDER BY c {order} limit {limit}"
-    )]
+    top_ten_plane = None
+    if order == "ASC":
+        top_ten_plane = [cols[0] for cols in sql_query(
+            f"SELECT tailnum, count(tailnum) AS c FROM flight WHERE tailnum IS NOT NULL GROUP BY tailnum ORDER BY c {order} limit {limit}"
+        )]
+    else:
+        top_ten_plane = sql_query(
+            f"SELECT tailnum, count(tailnum) AS c FROM flight WHERE tailnum IS NOT NULL GROUP BY tailnum ORDER BY c {order} limit {limit}"
+        )
+
     return top_ten_plane
 
