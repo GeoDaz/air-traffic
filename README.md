@@ -2,6 +2,14 @@
 
 Extraire l'archive des csv dans data-csv
 
+## Structure
+
+Les dossier se découpe en 3 projets plus les notbooks.
+
+Les projets airtraffic_dataclean/ et restful_app/ ont chacun leur propre venv. (sinon bug de dépendense circulaire)
+
+Le 3eme projet est le projet React : react/. Pour le lancer :<br/>
+`npm install` puis `npm start`
 
 ## venv
 
@@ -38,5 +46,5 @@ Lancer l'application : <br/>
 
 
 ## env
-Créer un env.py a partir du env.py.sample depuis database/ pour la connexion a la BDD.
+Créer 2 env.py a partir des env.py.sample depuis airtraffic_dataclean/ et restful_app/database/ pour la connexion a la BDD.
 

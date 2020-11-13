@@ -43,6 +43,7 @@ def clean_and_insert_data():
 
     # get the missing planes
     missing_planes = set(flights_serie) - set(planes_serie)
+    missing_planes.remove("NULL")
 
     missing_planes = pd.DataFrame({
         "tailnum": [plane for plane in missing_planes],
