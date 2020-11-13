@@ -123,6 +123,8 @@ const QuestionPage = () => {
 							table={answers['question_6'][0]}
 							cols={['Flight', 'Origin', 'Destination', 'Time']}
 						/>
+					</Segment>
+					<Segment>
 						<h3>
 							6.2) Combien de vols partent de NYC airports vers Seattle
 							(indice : 3923 vols) ?
@@ -144,7 +146,8 @@ const QuestionPage = () => {
 							Il y a <b>{answers['question_6'][3]}</b> avions uniques pour
 							Seattle.
 						</p>
-
+					</Segment>
+					<Segment>
 						{/* QUESTION 7 */}
 						<h3>
 							7. Trouver le nombre de vols unique par destination voir

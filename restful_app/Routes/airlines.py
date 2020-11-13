@@ -1,12 +1,12 @@
-from flask_restful import Resource
-from flask import jsonify, send_file
-from Utils.airports import get_airport_info
-from flask_restful import Resource
-from flask import jsonify, send_file
-from database.query import sql_query
-import matplotlib.pyplot as plt
 import pandas
 import io
+from database.query import sql_query
+from Utils.airports import get_airport_info
+from flask import jsonify, send_file
+from flask_restful import Resource
+import matplotlib
+matplotlib.use('Agg')  # nopep8
+import matplotlib.pyplot as plt
 
 
 class Airlines(Resource):
