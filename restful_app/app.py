@@ -5,6 +5,7 @@ import os
 from database.env import LOCAL_DATABASE
 import json
 from Routes.airports import Airports
+from Routes.airlines import Airlines
 from Routes.origin_airports import OriginAirports
 
 # from Routes.airlines import get_number_destination_per_airlines
@@ -37,6 +38,7 @@ api.add_resource(OriginAirports, "/api/airports/origin")
 api.add_resource(Airports, "/api/airports/<string:faa>")
 
 api.add_resource(Answers, "/api/answers")
+api.add_resource(Airlines, "/api/airlines/destination/count")
 
 # run debug
 if __name__ == "__main__":

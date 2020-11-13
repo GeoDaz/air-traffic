@@ -9,14 +9,14 @@ const QuestionPage = () => {
 	useEffect(() => {
 		fetch('http://localhost:5000/api/answers')
 			.then(response => response.json())
-			.then(table => {
-				setAnswers(table);
+			.then(json => {
+				setAnswers(json);
 			})
 			.catch(e => console.error(e));
-		fetch('http://127.0.0.1:5000/api/airlines/destination/count')
+		fetch('http://localhost:5000/api/airlines/destination/count')
 			.then(response => response.blob())
-			.then(response => {
-				setGraph(response);
+			.then(blob => {
+				setGraph(URL.createObjectURL(blob));
 			})
 			.catch(e => console.error(e));
 	}, []);
